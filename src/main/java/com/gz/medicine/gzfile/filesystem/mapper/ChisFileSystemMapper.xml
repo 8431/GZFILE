@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gz.medicine.gzfile.filesystem.mapper.ChisFileSystemMapper">
+  <resultMap id="BaseResultMap" type="com.gz.medicine.gzfile.filesystem.bean.ChisFileSystem">
+    <id column="GUID" jdbcType="CHAR" property="guid" />
+    <result column="ORG" jdbcType="VARCHAR" property="org" />
+    <result column="USRID" jdbcType="VARCHAR" property="usrid" />
+    <result column="VEDIOUUID" jdbcType="VARCHAR" property="vediouuid" />
+    <result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="FILENAME" jdbcType="VARCHAR" property="filename" />
+    <result column="FILEPATH" jdbcType="VARCHAR" property="filepath" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="RECEIVEID" jdbcType="VARCHAR" property="receiveid" />
+  </resultMap>
+  <resultMap id="ResultMap" type="java.util.Map">
+    <id column="GUID" jdbcType="CHAR" property="guid" />
+    <result column="ORG" jdbcType="VARCHAR" property="org" />
+    <result column="USRID" jdbcType="VARCHAR" property="usrid" />
+    <result column="VEDIOUUID" jdbcType="VARCHAR" property="vediouuid" />
+    <result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="FILENAME" jdbcType="VARCHAR" property="filename" />
+    <result column="FILEPATH" jdbcType="VARCHAR" property="filepath" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="RECEIVEID" jdbcType="VARCHAR" property="receiveid" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    GUID, ORG, USRID, VEDIOUUID, CREATEDATE, FILENAME, FILEPATH, TYPE,RECEIVEID
+  </sql>
+
+
+  <insert id="insertSelective" parameterType="com.gz.medicine.gzfile.filesystem.bean.ChisFileSystem">
+    insert into CHIS_FILE_SYSTEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="guid != null">
+        GUID,
+      </if>
+      <if test="org != null">
+        ORG,
+      </if>
+      <if test="usrid != null">
+        USRID,
+      </if>
+      <if test="vediouuid != null">
+        VEDIOUUID,
+      </if>
+      <if test="createdate != null">
+        CREATEDATE,
+      </if>
+      <if test="filename != null">
+        FILENAME,
+      </if>
+      <if test="filepath != null">
+        FILEPATH,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="receiveid != null">
+        RECEIVEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="guid != null">
+        #{guid,jdbcType=CHAR},
+      </if>
+      <if test="org != null">
+        #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="usrid != null">
+        #{usrid,jdbcType=VARCHAR},
+      </if>
+      <if test="vediouuid != null">
+        #{vediouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveid != null">
+        #{receiveid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.gz.medicine.gzfile.filesystem.bean.ChisFileSystem">
+    update CHIS_FILE_SYSTEM
+    <set>
+      <if test="org != null">
+        ORG = #{org,jdbcType=VARCHAR},
+      </if>
+      <if test="usrid != null">
+        USRID = #{usrid,jdbcType=VARCHAR},
+      </if>
+      <if test="vediouuid != null">
+        VEDIOUUID = #{vediouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filename != null">
+        FILENAME = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        FILEPATH = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveid != null">
+        TYPE = #{receiveid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GUID = #{guid,jdbcType=CHAR}
+  </update>
+  <select id="queryPageVedioList" parameterType="com.gz.medicine.common.mybatisPageVo.Page" resultMap="ResultMap">
+     select * from chis_file_system where USRID=#{usrid} and RECEIVEID=#{receiveid}
+     UNION ALL
+     select * from chis_file_system where USRID=#{receiveid} and RECEIVEID=#{usrid}
+
+  </select>
+
+
+
+</mapper>

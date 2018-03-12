@@ -1,0 +1,72 @@
+<html>
+
+<head>醫生註冊</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<body style="background:#ff9e00;text-align:center">
+
+    <form id="uploadForm">
+
+        <p>賬 號： <input type="text" id="name" /> </p>
+        <p>密 碼： <input type="password" id="password" /> </p>
+        <p>重複密碼： <input type="password" id="password2" /> </p>
+        <p>职称： <input type="text" id="titlecode" /> </p>
+        <p>擅长： <input type="text" id="begood" /> </p>
+        <p>个人介绍： <input type="text" id="perintroduction" /> </p>
+        <p>培训经历： <input type="text" id="trainingexperience" /> </p>
+        <p>姓名： <input type="text" id="senioritycode" /> </p>
+        <p>手机： <input type="text" id="phone" /> </p>
+        <p>資質1： <input type="file" name="pic1" /></p>
+        <p>資質2： <input type="file" name="pic2" /> </p>
+        <p>資質3： <input type="file" name="pic3" /> </p>
+        <input type="button" value="註冊" onclick="doUpload()" />
+    </form>
+
+</body>
+
+<script>
+    function doUpload() {
+        var local = "http://127.0.0.1:8080"
+
+        if ($("#password").val() != $("#password2").val()) {
+            alert("密碼輸入不一致！")
+            return;
+        } else {
+            var formData = new FormData($("#uploadForm"));
+            formData.append("name",$("#name").val());
+            formData.append("password", $("#password").val());
+             formData.append("docname", $("#docname").val());
+            $.ajax({
+                url: local + '/v1/file/zhuceDoctor',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code == "000") {
+                        alert("注册成功")
+                    }
+                    if (data.code == "001") {
+                        alert(data.message)
+                    }
+                }
+
+            });
+        }
+
+
+
+
+
+
+    }
+
+</script>
+
+
+</html>
